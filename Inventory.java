@@ -6,6 +6,8 @@ import javax.swing.JTextField;
 import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Font;
@@ -165,6 +167,43 @@ public class Inventory
     button.setFont(new Font("Arial", Font.PLAIN, 40));
     gbc.gridx = 3;
     gbc.gridy = 6;
+    button.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+	String clientName = clientTxt.getText();
+	if (clientName.length() == 0) {
+	  System.out.println("Please input the client name");
+	  return;
+	}
+
+	double total = 0;
+	double total1 = 0;
+	double total2 = 0;
+	double total3 = 0;
+	try {
+	  final double uv1 = Double.parseDouble(unitValTxt1.getText());
+	  final double uv2 = Double.parseDouble(unitValTxt2.getText());
+	  final double uv3 = Double.parseDouble(unitValTxt3.getText());
+	  final double q1 = Double.parseDouble(quantityTxt1.getText());
+	  final double q2 = Double.parseDouble(quantityTxt2.getText());
+	  final double q3 = Double.parseDouble(quantityTxt3.getText());
+	  total1 = (uv1 * q1);
+	  total2 = (uv2 * q2);
+	  total3 = (uv3 * q3);
+	  total = total1 + total2 + total3;
+	  totalTxt1.setText(String.format("%.2f", total1));
+	  totalTxt2.setText(String.format("%.2f", total2));
+	  totalTxt3.setText(String.format("%.2f", total3));
+	  grandTotalTxt.setText(String.format("%.2f", total));
+	} catch (NumberFormatException err) {
+	  String msg = "Please fill all the unit-value and quantity fields with numbers";
+	  System.out.println(msg);
+	  return;
+	}
+
+	String msg = clientName + " " + "the total is %.2f\n";
+	System.out.printf(msg, total);
+      }
+    });
     formPanel.add(button, gbc);
 
 
