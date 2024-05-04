@@ -163,10 +163,17 @@ public class Inventory
     formPanel.add(grandTotalTxt, gbc);
 
 
+    JLabel resultLabel = new JLabel("");
+    resultLabel.setFont(new Font("Arial", Font.PLAIN, 40));
+    gbc.gridx = 1;
+    gbc.gridy = 6;
+    formPanel.add(resultLabel, gbc);
+
+
     JButton button = new JButton("Calculate");
     button.setFont(new Font("Arial", Font.PLAIN, 40));
     gbc.gridx = 3;
-    gbc.gridy = 6;
+    gbc.gridy = 7;
     button.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
 	String clientName = clientTxt.getText();
@@ -202,6 +209,10 @@ public class Inventory
 
 	String msg = clientName + " " + "the total is %.2f\n";
 	System.out.printf(msg, total);
+	String res = "Dear " + clientName + " the total of your purchase order is $" +
+		     String.format("%.2f", total) + ".";
+	// FIXME: the next line causes the other fields to collapse
+	resultLabel.setText(res);
       }
     });
     formPanel.add(button, gbc);
